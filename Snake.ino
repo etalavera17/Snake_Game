@@ -98,16 +98,15 @@ void loop ()
   Serial.println ();
   
   
-  DrawPx(snakeArray[0].x, snakeArray[0].y,Blue); 
+   
   drawSnake();
+  DrawPx(snakeArray[0].x, snakeArray[0].y,Blue);
   DisplaySlate();
   delay(125);
   ClearSlate();
   updateSnake();
   
   DrawPx(xapple, yapple, Green);
-   DisplaySlate();
- 
   
   CheckButtonsPress();
    if (Button_Right)
@@ -178,6 +177,7 @@ void loop ()
       if (yapple == snakeArray[0].y) {
         xapple = random (8);
         yapple = random (8);
+        marker ++;
       }
     }
 
