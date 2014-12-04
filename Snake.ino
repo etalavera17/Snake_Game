@@ -50,30 +50,60 @@
 
 #include <MeggyJrSimple.h> // Required code, line 1 of 2.
 
-int xplayer = 3;         //coordinate of player dot 
-int yplayer = 4;
+
 int direction = 0;        //possible values are 0,90,180,270
 int xapple = random (8);
 int yapple = random (8);
+struct Point
+{
+  int x;
+  int y;
+};
+
+Point p1 = {3,4};
+Point p2 = {4,4};
+Point p3 = {5,4};
+Point snakeArray[64]= {p1, p2, p3};
+
+int marker=3;
+
 void setup()  
 {
    MeggyJrSimpleSetup(); 
    Serial.begin (9600);
 }
 
+void drawSnake()
+{
+  for (int i=0; i<marker; i++)
+  {
+   DrawPx (snakeArray[i].x, snakeArray[i].y, Red);
+  } 
+}
+
+void updateSnake()
+{
+  for (int i=marker-1; i>0; i--)
+  {
+    snakeArray[i] = snakeArray[i-1];
+  }
+}
 void loop ()
 
 {
    Serial.print ("X is ");
-  Serial.println (xplayer);
+  Serial.println (snakeArray[0].x);
   Serial.print ("Y is ");
-  Serial.println (yplayer);
+  Serial.println (snakeArray[0].y);
   Serial.println ();
   
-  DrawPx(xplayer, yplayer,Blue); 
+  
+  DrawPx(snakeArray[0].x, snakeArray[0].y,Blue); 
+  drawSnake();
   DisplaySlate();
-  delay(100);
+  delay(125);
   ClearSlate();
+  updateSnake();
   
   DrawPx(xapple, yapple, Green);
    DisplaySlate();
@@ -102,50 +132,50 @@ void loop ()
     
       if (direction == 0) 
       {
-      yplayer ++;
+      snakeArray[0].y ++;
       }
       if (direction == 90)
      { 
-      xplayer ++;
+      snakeArray[0].x ++;
      }
       if (direction == 180) 
       
       {
-      yplayer --;
+     snakeArray[0].y --;
       }
       
       if (direction == 270) 
       
       {
-      xplayer --;
+     snakeArray[0].x --;
       }
       
-      if (xplayer > 7)
+      if (snakeArray[0].x > 7)
       
       {
-      xplayer=0;
+      snakeArray[0].x=0;
       }
       
-      if (yplayer > 7)
+      if (snakeArray[0].y > 7)
       
       {
-      yplayer=0;
+     snakeArray[0].y=0;
       }
       
-      if (xplayer < 0)
+      if (snakeArray[0].x < 0)
       
       {
-      xplayer=7;
+      snakeArray[0].x=7;
       }
       
-      if (yplayer < 0)
+      if (snakeArray[0].y < 0)
       
       {
-      yplayer=7;
+      snakeArray[0].y=7;
       }
       
-    if (xapple == xplayer) {
-      if (yapple == yplayer) {
+    if (xapple == snakeArray[0].x) {
+      if (yapple == snakeArray[0].y) {
         xapple = random (8);
         yapple = random (8);
       }
