@@ -178,6 +178,7 @@ void loop ()
         xapple = random (8);
         yapple = random (8);
         marker ++;
+        Tone_Start(5000,50);
       }
     }
 
